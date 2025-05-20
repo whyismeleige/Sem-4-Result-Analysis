@@ -1,0 +1,200 @@
+---
+title: "3rd Semester Result Analysis"
+author: "Piyush Jain"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    css: styles.css
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(readxl)
+library(dplyr)
+library(knitr)
+library(kableExtra)
+library(DT)
+library(tidyverse)
+library(grid)
+library(gridExtra)
+library(ggthemes)
+```
+
+## R Markdown
+
+Hello to anyone, who is reading this. My name is Piyush Jain, and this
+is my analysis of my class results for the 4th Semester. I have acquired
+my data and have properly arranged it in a way that anyone who read this
+will understand it.<br> And if you are interested to check last
+semesters result analysis,<br>
+
+## 2nd Semester Results
+
+<a href = "https://whyismeleige.github.io/2nd-Semester-Results-Data-Analysis/2nd-Semester-Results-Data-Analysis.html">
+
+<h4>Click Here</h4>
+
+</a><br>
+
+## 3rd Semester Results
+
+<a href = "https://whyismeleige.github.io/3rd-Semester-Data-Analysis/Sem-3-Result-Analysis">
+
+<h4>Click Here</h4>
+
+</a><br> In the following table, if any of my friends are reading this
+they can see there results in the bottom table.
+
+```{r results,echo=FALSE}
+results <- read.csv("D:\\Program Scripts\\Side-Projects\\Web_Scraping_College_Website\\BBA-IT-External-Marks-structured-3.csv")
+results <- results %>% select(-starts_with("X"),-"SGPA.1",-"Final_Result.1",-"course")
+
+results <- results %>% rename(MS = Management.Science,
+                              FFM = Fundamentals.of.Financial.Management,
+                              RM = Research.Methodology,
+                              WT = Web.Technologies..T.P.,
+                              SPM = Software.Project.Management..T.P.,
+                              English = English.for.Employability)
+datatable(results,options = list(pagelength = 6))
+```
+
+## Plots of BBA IT Sem 4 Results
+
+In the multiple plots that we have been given below we clearly see the
+number of students that have passed or failed in the subjects:
+
+Management Science, Fundamentals of Financial Management, Research
+Methodology, Web Technologies, Software Project Management, English for
+Employability
+
+```{r pressure, echo=FALSE}
+rm_analysis <- results %>% group_by(RM) %>% summarize(student.name = n()) %>% ggplot(aes(RM,student.name)) +
+  geom_col() + 
+  xlab("SGPA of Students") + 
+  ylab("Number of Students") + 
+  ggtitle("RM Results") +
+  theme_wsj() +
+  theme(legend.position = "none",text = element_text(size = 10))
+
+
+ms_analysis <- results %>% group_by(MS) %>% summarize(student.name = n()) %>% ggplot(aes(MS,student.name)) +
+  geom_col() + 
+  xlab("SGPA of Students") + 
+  ylab("Number of Students") + 
+  ggtitle("MS Results") +
+  theme_wsj() +
+  theme(legend.position = "none",text = element_text(size = 10))
+
+
+wt_analysis <- results %>% group_by(WT) %>% summarize(student.name = n()) %>% ggplot(aes(WT,student.name)) +
+  geom_col() + 
+  xlab("SGPA of Students") + 
+  ylab("Number of Students") + 
+  ggtitle("WT Results") +
+  theme_wsj() +
+  theme(legend.position = "none",text = element_text(size = 10))
+
+spm_analysis <- results %>% group_by(SPM) %>% summarize(student.name = n()) %>% ggplot(aes(SPM,student.name)) +
+  geom_col() + 
+  xlab("SGPA of Students") + 
+  ylab("Number of Students") + 
+  ggtitle("SPM Results") +
+  theme_wsj() +
+  theme(legend.position = "none",text = element_text(size = 10))
+
+
+ffm_analysis <- results %>% group_by(FFM) %>% summarize(student.name = n()) %>% ggplot(aes(FFM,student.name)) +
+  geom_col() + 
+  xlab("SGPA of Students") + 
+  ylab("Number of Students") + 
+  ggtitle("FFM Results") +
+  theme_wsj() +
+  theme(legend.position = "none",text = element_text(size = 10))
+
+
+english_analysis <- results %>% group_by(English) %>% summarize(student.name = n()) %>% ggplot(aes(English,student.name)) +
+  geom_col() + 
+  xlab("SGPA of Students") + 
+  ylab("Number of Students") + 
+  ggtitle("English Results") +
+  theme_wsj() +
+  theme(legend.position = "none",text = element_text(size = 10))
+
+
+combined_graphs <- grid.arrange(ms_analysis,
+                                ffm_analysis,
+                                rm_analysis,
+                                spm_analysis,
+                                wt_analysis,
+                                english_analysis)
+```
+
+## RM Plot
+
+This was an easy subject to score in, many students performed really
+well in this subject since it is a theoretical subject, but since it is
+more theoretical no student scored more than A+.
+
+```{r RM,echo = FALSE}
+rm_analysis
+```
+
+## FFM Plot
+
+Oh ho, FFM man only 16 % students failed, i lost my money god damn. and
+This Subject has the most students scoring O's. I guess I am a really
+good motivator
+
+```{r FFM,echo = FALSE}
+ffm_analysis
+```
+
+## MS Plot
+
+I hope this maam does not come next semester, I dont want to hear her grandfather's death, The score of MS is distributed fairly equally.
+
+```{r CMA, echo = FALSE}
+ms_analysis
+```
+
+## Web Technologies Result
+
+Web Technologies, Very less failures this time.
+
+```{r Statistics, echo=FALSE}
+wt_analysis
+```
+
+## SPM Plot
+
+Most of them scored really well for this exam.
+
+```{r SPM,echo=FALSE}
+spm_analysis
+```
+
+## UHVGS Plot
+
+This was the most easiest subject out of all subjects and we can clearly
+see in the graph that majority of students have scored excellent grades.
+
+```{r es,echo=FALSE}
+english_analysis
+```
+
+## Top 10 performing students
+
+This semester the top 10 students performed are given below in the table
+where most of the students had a tough time, these students passed with
+an exceptional grade. This time Gurpreet has scored the best marks.
+
+```{r top10,echo = FALSE,warning= FALSE}
+top_10 <- results %>% filter(!is.na(SGPA))%>% 
+  mutate(student.name = reorder(student.name,SGPA)) %>%
+  arrange(desc(SGPA)) %>%
+  head(10)
+kable(top_10,"html") %>% kable_styling(full_width = FALSE)
+```

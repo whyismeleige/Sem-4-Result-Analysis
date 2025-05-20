@@ -1,0 +1,5 @@
+"0","top_10 <- results %>% filter(!is.na(SGPA))%>% "
+"0","  mutate(student.name = reorder(student.name,SGPA)) %>%"
+"0","  arrange(desc(SGPA)) %>%"
+"0","  head(10)"
+"0","kable(top_10,""html"") %>% kable_styling(full_width = FALSE)"
